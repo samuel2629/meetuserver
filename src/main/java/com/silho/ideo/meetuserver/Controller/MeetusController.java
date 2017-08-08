@@ -27,6 +27,9 @@ public class MeetusController {
                           @RequestParam("myLongitude") double myLongitude,
                           @RequestParam("latitudeDestination") double latitudeDestination,
                           @RequestParam("longitudeDestination") double longitudeDestination){
-        return duration + myLatitude + myLongitude + latitudeDestination + longitudeDestination;
+        return duration + " my latitude : " + myLatitude
+                + " my longitude : "+myLongitude
+                +" destination latitude : "+ latitudeDestination
+                +" destination longitude : "+ longitudeDestination;
     }
 }

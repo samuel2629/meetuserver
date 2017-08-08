@@ -16,6 +16,6 @@ public class MeetusController {
     @RequestMapping(value = "/apiKey", method = RequestMethod.GET)
     @ResponseBody
     public String getApiKey(){
-        return "AIzaSyDuioRSRLgLzgBwGGaY3qPln411JJhRUIA";
+        return "l";
     }
 }

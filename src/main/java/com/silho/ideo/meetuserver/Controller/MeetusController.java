@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class MeetusController {
 
+    private String apiKey = System.getenv("API_KEY");
+
     @RequestMapping("/")
     public String home(){
         return "home";
@@ -16,6 +18,6 @@ public class MeetusController {
     @RequestMapping(value = "/apiKey", method = RequestMethod.GET)
     @ResponseBody
     public String getApiKey(){
-        return "l";
+        return apiKey;
     }
 }

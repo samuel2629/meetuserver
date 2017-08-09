@@ -50,14 +50,14 @@ public class MeetusController {
     @Autowired
     AndroidPushNotificationsService androidPushNotificationsService;
 
-    @RequestMapping(value = "/send", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<String> send(){
+    @RequestMapping(value = "/send", method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity<String> send( @RequestParam("token") String token){
 
 
         JSONObject body = new JSONObject();
         // JsonArray registration_ids = new JsonArray();
         // body.put("registration_ids", registration_ids);
-        body.put("to", "488244970343");
+        body.put("to", token);
         body.put("priority", "high");
         // body.put("dry_run", true);
 

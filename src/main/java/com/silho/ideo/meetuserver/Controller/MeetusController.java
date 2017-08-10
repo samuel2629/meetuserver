@@ -40,12 +40,14 @@ public class MeetusController {
                           @RequestParam("longitude") double myLongitude,
                           @RequestParam("latitudeDestination") double latitudeDestination,
                           @RequestParam("longitudeDestination") double longitudeDestination,
-                          @RequestParam("token") String token){
+                          @RequestParam("token") String token,
+                          @RequestParam("idFacebook") String idFacebook,
+                          @RequestParam("name") String name) {
         return duration + " my latitude : " + myLatitude
                 + " my longitude : "+myLongitude
                 +" destination latitude : "+ latitudeDestination
                 +" destination longitude : "+ longitudeDestination
-                + " token : " + token;
+                + " token : " + token + " idFacebook : " + idFacebook + " name : " + name;
     }
 
     private static final Logger log = LoggerFactory.getLogger(MeetusController.class);

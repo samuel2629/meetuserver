@@ -28,11 +28,6 @@ public class MeetusController {
         return "home";
     }
 
-    @RequestMapping(value = "/apiKey", method = RequestMethod.GET)
-    public String getApiKey(){
-        return System.getenv("API_KEY");
-    }
-
     @RequestMapping(value = "/request", method = RequestMethod.POST)
     @ResponseBody
     public String request(@RequestParam("duration") String duration,
@@ -42,7 +37,8 @@ public class MeetusController {
                           @RequestParam("longitudeDestination") double longitudeDestination,
                           @RequestParam("token") String token,
                           @RequestParam("idFacebook") String idFacebook,
-                          @RequestParam("name") String name) {
+                          @RequestParam("name") String name) throws JSONException {
+        send(token, name);
         return duration + " my latitude : " + myLatitude
                 + " my longitude : "+myLongitude
                 +" destination latitude : "+ latitudeDestination
@@ -56,7 +52,8 @@ public class MeetusController {
     AndroidPushNotificationsService androidPushNotificationsService;
 
     @RequestMapping(value = "/send", method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<String> send( @RequestParam("token") String token) throws JSONException {
+    public ResponseEntity<String> send( @RequestParam("token") String token,
+                                        String name) throws JSONException {
 
 
         JSONObject body = new JSONObject();
@@ -67,8 +64,8 @@ public class MeetusController {
         // body.put("dry_run", true);
 
         JSONObject notification = new JSONObject();
-        notification.put("body", "body string here");
-        notification.put("title", "title string here");
+        notification.put("body", "Meetus ?");
+        notification.put("title", name);
         // notification.put("icon", "myicon");
 
         JSONObject data = new JSONObject();

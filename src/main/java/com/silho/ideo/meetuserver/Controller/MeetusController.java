@@ -2,7 +2,8 @@ package com.silho.ideo.meetuserver.Controller;
 
 import com.silho.ideo.meetuserver.helpers.AndroidPushNotificationsService;
 import com.silho.ideo.meetuserver.helpers.FirebaseResponse;
-import org.json.simple.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,14 +36,16 @@ public class MeetusController {
     @RequestMapping(value = "/request", method = RequestMethod.POST)
     @ResponseBody
     public String request(@RequestParam("duration") String duration,
-                          @RequestParam("myLatitude") double myLatitude,
-                          @RequestParam("myLongitude") double myLongitude,
+                          @RequestParam("latitude") double myLatitude,
+                          @RequestParam("longitude") double myLongitude,
                           @RequestParam("latitudeDestination") double latitudeDestination,
-                          @RequestParam("longitudeDestination") double longitudeDestination){
+                          @RequestParam("longitudeDestination") double longitudeDestination,
+                          @RequestParam("token") String token){
         return duration + " my latitude : " + myLatitude
                 + " my longitude : "+myLongitude
                 +" destination latitude : "+ latitudeDestination
-                +" destination longitude : "+ longitudeDestination;
+                +" destination longitude : "+ longitudeDestination
+                + " token : " + token;
     }
 
     private static final Logger log = LoggerFactory.getLogger(MeetusController.class);
@@ -51,7 +54,7 @@ public class MeetusController {
     AndroidPushNotificationsService androidPushNotificationsService;
 
     @RequestMapping(value = "/send", method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<String> send( @RequestParam("token") String token){
+    public ResponseEntity<String> send( @RequestParam("token") String token) throws JSONException {
 
 
         JSONObject body = new JSONObject();

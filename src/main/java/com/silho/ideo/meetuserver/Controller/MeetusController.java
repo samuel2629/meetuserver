@@ -37,13 +37,16 @@ public class MeetusController {
                           @RequestParam("longitudeDestination") double longitudeDestination,
                           @RequestParam("token") String token,
                           @RequestParam("idFacebook") String idFacebook,
-                          @RequestParam("name") String name) throws JSONException {
+                          @RequestParam("username") String name,
+                          @RequestParam("friendToken") String friendToken,
+                          @RequestParam("placeName") String placeName) throws JSONException {
         send(token, name);
         return duration + " my latitude : " + myLatitude
                 + " my longitude : "+myLongitude
                 +" destination latitude : "+ latitudeDestination
                 +" destination longitude : "+ longitudeDestination
-                + " token : " + token + " idFacebook : " + idFacebook + " name : " + name;
+                + " token : " + token + " idFacebook : " + idFacebook
+                + " name : " + name + " place name : " + placeName;
     }
 
     private static final Logger log = LoggerFactory.getLogger(MeetusController.class);

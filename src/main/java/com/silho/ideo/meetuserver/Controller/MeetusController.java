@@ -55,7 +55,7 @@ public class MeetusController {
     AndroidPushNotificationsService androidPushNotificationsService;
 
     @RequestMapping(value = "/send", method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<String> send(String token, double myLatitude, double myLongitude, String placeName,
+    public ResponseEntity<String> send(String token, double latitudeDestination, double longitudeDestination, String placeName,
                                        String username, String duration, String idFacebook) throws JSONException {
 
 
@@ -72,8 +72,8 @@ public class MeetusController {
         // notification.put("icon", "myicon");
 
         JSONObject data = new JSONObject();
-        data.put("latitudeSender", myLatitude);
-        data.put("longitudeSender", myLongitude);
+        data.put("latitudeDestination", latitudeDestination);
+        data.put("longitudeDestination", longitudeDestination);
         data.put("idFacebook", idFacebook);
         data.put("placeName", placeName);
         data.put("durationSender", duration);

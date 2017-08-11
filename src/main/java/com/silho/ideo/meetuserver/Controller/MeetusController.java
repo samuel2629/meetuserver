@@ -37,16 +37,16 @@ public class MeetusController {
                           @RequestParam("longitudeDestination") double longitudeDestination,
                           @RequestParam("token") String token,
                           @RequestParam("idFacebook") String idFacebook,
-                          @RequestParam("username") String name,
+                          @RequestParam("username") String username,
                           @RequestParam("friendToken") String friendToken,
                           @RequestParam("placeName") String placeName) throws JSONException {
-        send(token, name);
+        send(token, latitudeDestination, longitudeDestination, placeName, username, duration, idFacebook);
         return duration + " my latitude : " + myLatitude
                 + " my longitude : "+myLongitude
                 +" destination latitude : "+ latitudeDestination
                 +" destination longitude : "+ longitudeDestination
                 + " token : " + token + " idFacebook : " + idFacebook
-                + " name : " + name + " place name : " + placeName;
+                + " username : " + username + " place username : " + placeName;
     }
 
     private static final Logger log = LoggerFactory.getLogger(MeetusController.class);
@@ -55,8 +55,8 @@ public class MeetusController {
     AndroidPushNotificationsService androidPushNotificationsService;
 
     @RequestMapping(value = "/send", method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<String> send( @RequestParam("token") String token,
-                                        String name) throws JSONException {
+    public ResponseEntity<String> send(String token, double myLatitude, double myLongitude, String placeName,
+                                       String username, String duration, String idFacebook) throws JSONException {
 
 
         JSONObject body = new JSONObject();
@@ -68,12 +68,15 @@ public class MeetusController {
 
         JSONObject notification = new JSONObject();
         notification.put("body", "Meetus ?");
-        notification.put("title", name);
+        notification.put("title", username);
         // notification.put("icon", "myicon");
 
         JSONObject data = new JSONObject();
-        data.put("key1", "value1");
-        data.put("key2", "value2");
+        data.put("latitudeSender", myLatitude);
+        data.put("longitudeSender", myLongitude);
+        data.put("idFacebook", idFacebook);
+        data.put("placeName", placeName);
+        data.put("durationSender", duration);
 
         body.put("notification", notification);
         body.put("data", data);

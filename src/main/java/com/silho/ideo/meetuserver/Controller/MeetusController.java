@@ -39,14 +39,16 @@ public class MeetusController {
                           @RequestParam("idFacebook") String idFacebook,
                           @RequestParam("username") String username,
                           @RequestParam("friendToken") String friendToken,
-                          @RequestParam("placeName") String placeName) throws JSONException {
-        send(token, latitudeDestination, longitudeDestination, placeName, username, duration, idFacebook);
+                          @RequestParam("placeName") String placeName,
+                          @RequestParam("urlProfilPic") String profilPic) throws JSONException {
+        send(token, latitudeDestination, longitudeDestination, placeName, username, duration, idFacebook, profilPic);
         return duration + " my latitude : " + myLatitude
                 + " my longitude : "+myLongitude
                 +" destination latitude : "+ latitudeDestination
                 +" destination longitude : "+ longitudeDestination
                 + " token : " + token + " idFacebook : " + idFacebook
-                + " username : " + username + " place username : " + placeName;
+                + " username : " + username + " place username : " + placeName
+                + " url profil pic : " + profilPic;
     }
 
     private static final Logger log = LoggerFactory.getLogger(MeetusController.class);
@@ -56,7 +58,7 @@ public class MeetusController {
 
     @RequestMapping(value = "/send", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<String> send(String token, double latitudeDestination, double longitudeDestination, String placeName,
-                                       String username, String duration, String idFacebook) throws JSONException {
+                                       String username, String duration, String idFacebook, String profilPic) throws JSONException {
 
 
         JSONObject body = new JSONObject();
@@ -77,6 +79,7 @@ public class MeetusController {
         data.put("idFacebook", idFacebook);
         data.put("placeName", placeName);
         data.put("durationSender", duration);
+        data.put("profilPic", profilPic);
 
         body.put("notification", notification);
         body.put("data", data);

@@ -39,9 +39,9 @@ public class MeetusController {
                           @RequestParam("token") String token,
                           @RequestParam("idFacebook") String idFacebook,
                           @RequestParam("username") String username,
-                          @Nullable @RequestParam("friendToken") String friendToken,
+                          @RequestParam(required = false, value = "friendToken") String friendToken,
                           @RequestParam("placeName") String placeName,
-                          @Nullable @RequestParam("urlProfilPic") String profilPic) throws JSONException {
+                          @RequestParam(required = false, value = "urlProfilPic") String profilPic) throws JSONException {
         send(token, latitudeDestination, longitudeDestination, placeName, username, duration, idFacebook, profilPic);
         return duration + " my latitude : " + myLatitude
                 + " my longitude : "+myLongitude

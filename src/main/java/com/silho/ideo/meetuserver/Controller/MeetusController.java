@@ -2,7 +2,6 @@ package com.silho.ideo.meetuserver.Controller;
 
 import com.silho.ideo.meetuserver.helpers.AndroidPushNotificationsService;
 import com.silho.ideo.meetuserver.helpers.FirebaseResponse;
-import com.sun.istack.internal.Nullable;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -59,7 +58,7 @@ public class MeetusController {
 
     @RequestMapping(value = "/send", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<String> send(String token, double latitudeDestination, double longitudeDestination, String placeName,
-                                       String username, String duration, String idFacebook,@Nullable String profilPic) throws JSONException {
+                                       String username, String duration, String idFacebook, String profilPic) throws JSONException {
 
 
         JSONObject body = new JSONObject();

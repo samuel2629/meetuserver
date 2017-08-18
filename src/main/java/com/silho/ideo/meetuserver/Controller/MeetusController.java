@@ -30,7 +30,7 @@ public class MeetusController {
 
     @RequestMapping(value = "/request", method = RequestMethod.POST)
     @ResponseBody
-    public String request(@RequestParam("duration") String duration,
+    public String request(@RequestParam(value = "duration", required = false) String duration,
                           @RequestParam("latitude") double myLatitude,
                           @RequestParam("longitude") double myLongitude,
                           @RequestParam("latitudeDestination") double latitudeDestination,
@@ -40,7 +40,7 @@ public class MeetusController {
                           @RequestParam("username") String username,
                           @RequestParam(value = "friendToken", required = false) String friendToken,
                           @RequestParam("placeName") String placeName,
-                          @RequestParam(value = "urlProfilPic", required = false) String profilPic) throws JSONException {
+                          @RequestParam(value = "urlFriendProfilPic", required = false) String profilPic) throws JSONException {
         send(token, latitudeDestination, longitudeDestination, placeName, username, duration, idFacebook, profilPic);
         return duration + " my latitude : " + myLatitude
                 + " my longitude : "+myLongitude

@@ -40,8 +40,14 @@ public class MeetusController {
                           @RequestParam("username") String username,
                           @RequestParam(value = "friendToken", required = false) String friendToken,
                           @RequestParam("placeName") String placeName,
-                          @RequestParam(value = "urlFriendProfilPic", required = false) String profilPic) throws JSONException {
-        send(token, latitudeDestination, longitudeDestination, placeName, username, duration, idFacebook, profilPic);
+                          @RequestParam(value = "urlFriendProfilPic", required = false) String profilPic,
+                          @RequestParam(value = "year", required = false) int year,
+                          @RequestParam(value = "day", required = false) int day,
+                          @RequestParam(value = "hour", required = false) int hour,
+                          @RequestParam(value = "minute", required = false) int minute,
+                          @RequestParam(value = "month", required = false) int month) throws JSONException {
+        send(token, latitudeDestination, longitudeDestination, placeName, username, duration, idFacebook, profilPic,
+                year, month, day, hour, minute);
         return duration + " my latitude : " + myLatitude
                 + " my longitude : "+myLongitude
                 +" destination latitude : "+ latitudeDestination
@@ -58,7 +64,8 @@ public class MeetusController {
 
     @RequestMapping(value = "/send", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<String> send(String token, double latitudeDestination, double longitudeDestination, String placeName,
-                                       String username, String duration, String idFacebook, String profilPic) throws JSONException {
+                                       String username, String duration, String idFacebook, String profilPic, int year,
+                                       int month, int day, int hour, int minute) throws JSONException {
 
 
         JSONObject body = new JSONObject();
@@ -80,6 +87,11 @@ public class MeetusController {
         data.put("placeName", placeName);
         data.put("durationSender", duration);
         data.put("profilPic", profilPic);
+        data.put("year", year);
+        data.put("month", month);
+        data.put("day", day);
+        data.put("hour", hour);
+        data.put("minute", minute);
 
         body.put("notification", notification);
         body.put("data", data);

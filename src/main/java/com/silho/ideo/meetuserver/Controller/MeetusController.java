@@ -1,7 +1,8 @@
-package com.silho.ideo.meetuserver.Controller;
+package com.silho.ideo.meetuserver.controller;
 
 import com.silho.ideo.meetuserver.helpers.AndroidPushNotificationsService;
 import com.silho.ideo.meetuserver.helpers.FirebaseResponse;
+import com.silho.ideo.meetuserver.model.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -38,23 +40,18 @@ public class MeetusController {
                           @RequestParam("token") String token,
                           @RequestParam("idFacebook") String idFacebook,
                           @RequestParam("username") String username,
-                          @RequestParam(value = "friendToken", required = false) String friendToken,
                           @RequestParam("placeName") String placeName,
-                          @RequestParam(value = "urlFriendProfilPic", required = false) String profilPic,
-                          @RequestParam(value = "year", required = false) int year,
-                          @RequestParam(value = "day", required = false) int day,
-                          @RequestParam(value = "hour", required = false) int hour,
-                          @RequestParam(value = "minute", required = false) int minute,
-                          @RequestParam(value = "month", required = false) int month) throws JSONException {
-        send(token, latitudeDestination, longitudeDestination, placeName, username, duration, idFacebook, profilPic,
-                year, month, day, hour, minute);
+                          @RequestParam("time") long time,
+                          @RequestParam("year")int year,
+                          @RequestParam(value = "friendsList", required = false)ArrayList<User> users) throws JSONException {
+        send(token, latitudeDestination, longitudeDestination, placeName, username, duration, idFacebook, time, users, year);
         return duration + " my latitude : " + myLatitude
                 + " my longitude : "+myLongitude
                 +" destination latitude : "+ latitudeDestination
                 +" destination longitude : "+ longitudeDestination
                 + " token : " + token + " idFacebook : " + idFacebook
                 + " username : " + username + " place username : " + placeName
-                + " url profil pic : " + profilPic;
+                + "friends : " + users;
     }
 
     private static final Logger log = LoggerFactory.getLogger(MeetusController.class);
@@ -64,8 +61,7 @@ public class MeetusController {
 
     @RequestMapping(value = "/send", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<String> send(String token, double latitudeDestination, double longitudeDestination, String placeName,
-                                       String username, String duration, String idFacebook, String profilPic, int year,
-                                       int month, int day, int hour, int minute) throws JSONException {
+                                       String username, String duration, String idFacebook, long time, ArrayList<User> users, int year) throws JSONException {
 
 
         JSONObject body = new JSONObject();
@@ -86,12 +82,9 @@ public class MeetusController {
         data.put("idFacebook", idFacebook);
         data.put("placeName", placeName);
         data.put("durationSender", duration);
-        data.put("profilPic", profilPic);
+        data.put("time", time);
+        data.put("freindsList", users);
         data.put("year", year);
-        data.put("month", month);
-        data.put("day", day);
-        data.put("hour", hour);
-        data.put("minute", minute);
 
         body.put("notification", notification);
         body.put("data", data);

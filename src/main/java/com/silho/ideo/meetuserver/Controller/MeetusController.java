@@ -42,9 +42,8 @@ public class MeetusController {
                           @RequestParam("username") String username,
                           @RequestParam("placeName") String placeName,
                           @RequestParam("time") long time,
-                          @RequestParam("year")int year,
                           @RequestParam(value = "friendsList", required = false)ArrayList<User> users) throws JSONException {
-        send(token, latitudeDestination, longitudeDestination, placeName, username, duration, idFacebook, time, users, year);
+        send(token, latitudeDestination, longitudeDestination, placeName, username, duration, idFacebook, time, users);
         return duration + " my latitude : " + myLatitude
                 + " my longitude : "+myLongitude
                 +" destination latitude : "+ latitudeDestination
@@ -61,7 +60,7 @@ public class MeetusController {
 
     @RequestMapping(value = "/send", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<String> send(String token, double latitudeDestination, double longitudeDestination, String placeName,
-                                       String username, String duration, String idFacebook, long time, ArrayList<User> users, int year) throws JSONException {
+                                       String username, String duration, String idFacebook, long time, ArrayList<User> users) throws JSONException {
 
 
         JSONObject body = new JSONObject();
@@ -84,7 +83,6 @@ public class MeetusController {
         data.put("durationSender", duration);
         data.put("time", time);
         data.put("freindsList", users);
-        data.put("year", year);
 
         body.put("notification", notification);
         body.put("data", data);

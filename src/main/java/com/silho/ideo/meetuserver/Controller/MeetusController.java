@@ -56,7 +56,7 @@ public class MeetusController {
             JSONObject body = new JSONObject();
             // JsonArray registration_ids = new JsonArray();
             // body.put("registration_ids", registration_ids);
-            body.put("to", users.get(0).getToken());
+            body.put("to", "fcNA-4yS5FQ:APA91bHyr_QFhngGKoazd4ztyohaLbQQjgbMwt4TgNuYng7Wv2YD8gwkgdU8C96e_b8d37RFmaA-sto99auOSafHwliQ7bowYep83ndc_0NPQ7tM2jfOmbAvdTuGg4V3VtUlbdiZZYPn");
             body.put("priority", "high");
             // body.put("dry_run", true);
 

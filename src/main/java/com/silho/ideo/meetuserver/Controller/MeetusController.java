@@ -61,13 +61,10 @@ public class MeetusController {
     public ResponseEntity<String> send(double latitudeDestination, double longitudeDestination, String placeName,
                                        String username, String duration, String idFacebook, long time, ArrayList<User> users) throws JSONException {
 
-
-        for (User user : users) {
-
             JSONObject body = new JSONObject();
             // JsonArray registration_ids = new JsonArray();
             // body.put("registration_ids", registration_ids);
-            body.put("to", user.getToken());
+            body.put("to", users.get(0).getToken());
             body.put("priority", "high");
             // body.put("dry_run", true);
 
@@ -109,8 +106,5 @@ public class MeetusController {
             }
 
             return new ResponseEntity<>("the push notification cannot be send.", HttpStatus.BAD_REQUEST);
-        }
-
-        return new ResponseEntity<>("the push notification cannot be send.", HttpStatus.BAD_REQUEST);
     }
 }

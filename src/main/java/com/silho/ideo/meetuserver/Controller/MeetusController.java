@@ -37,18 +37,17 @@ public class MeetusController {
                           @RequestParam("longitude") double myLongitude,
                           @RequestParam("latitudeDestination") double latitudeDestination,
                           @RequestParam("longitudeDestination") double longitudeDestination,
-                          @RequestParam(value = "token", required = false) String token,
                           @RequestParam("idFacebook") String idFacebook,
                           @RequestParam("username") String username,
                           @RequestParam("placeName") String placeName,
                           @RequestParam("time") long time,
                           @RequestParam(value = "friendsList", required = false)ArrayList<User> users) throws JSONException {
-        send(token, latitudeDestination, longitudeDestination, placeName, username, duration, idFacebook, time, users);
+        send(latitudeDestination, longitudeDestination, placeName, username, duration, idFacebook, time, users);
         return duration + " my latitude : " + myLatitude
                 + " my longitude : "+myLongitude
                 +" destination latitude : "+ latitudeDestination
                 +" destination longitude : "+ longitudeDestination
-                + " token : " + token + " idFacebook : " + idFacebook
+                + " idFacebook : " + idFacebook
                 + " username : " + username + " place username : " + placeName
                 + "friends : " + users;
     }
@@ -59,7 +58,7 @@ public class MeetusController {
     AndroidPushNotificationsService androidPushNotificationsService;
 
     @RequestMapping(value = "/send", method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<String> send(String token, double latitudeDestination, double longitudeDestination, String placeName,
+    public ResponseEntity<String> send(double latitudeDestination, double longitudeDestination, String placeName,
                                        String username, String duration, String idFacebook, long time, ArrayList<User> users) throws JSONException {
 
 

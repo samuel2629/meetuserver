@@ -108,7 +108,9 @@ public class MeetusController {
                 e.printStackTrace();
             }
 
-        }
             return new ResponseEntity<>("the push notification cannot be send.", HttpStatus.BAD_REQUEST);
         }
+
+        return new ResponseEntity<>("the push notification cannot be send.", HttpStatus.BAD_REQUEST);
+    }
 }

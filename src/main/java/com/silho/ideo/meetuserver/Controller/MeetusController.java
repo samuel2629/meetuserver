@@ -37,7 +37,7 @@ public class MeetusController {
                           @RequestParam("longitude") double myLongitude,
                           @RequestParam("latitudeDestination") double latitudeDestination,
                           @RequestParam("longitudeDestination") double longitudeDestination,
-                          @RequestParam("token") String token,
+                          @RequestParam(value = "token", required = false) String token,
                           @RequestParam("idFacebook") String idFacebook,
                           @RequestParam("username") String username,
                           @RequestParam("placeName") String placeName,

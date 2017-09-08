@@ -63,47 +63,53 @@ public class MeetusController {
                                        String username, String duration, String idFacebook, long time, ArrayList<User> users) throws JSONException {
 
 
-        JSONObject body = new JSONObject();
-        // JsonArray registration_ids = new JsonArray();
-        // body.put("registration_ids", registration_ids);
-        body.put("to", token);
-        body.put("priority", "high");
-        // body.put("dry_run", true);
+        for (User user : users) {
 
-        JSONObject notification = new JSONObject();
-        notification.put("body", "Meetus ?");
-        notification.put("title", username);
-        // notification.put("icon", "myicon");
+            JSONObject body = new JSONObject();
+            // JsonArray registration_ids = new JsonArray();
+            // body.put("registration_ids", registration_ids);
+            body.put("to", user.getToken());
+            body.put("priority", "high");
+            // body.put("dry_run", true);
 
-        JSONObject data = new JSONObject();
-        data.put("latitudeDestination", latitudeDestination);
-        data.put("longitudeDestination", longitudeDestination);
-        data.put("idFacebook", idFacebook);
-        data.put("placeName", placeName);
-        data.put("durationSender", duration);
-        data.put("time", time);
-        data.put("freindsList", users);
+            JSONObject notification = new JSONObject();
+            notification.put("body", "Meetus ?");
+            notification.put("title", username);
+            // notification.put("icon", "myicon");
 
-        body.put("notification", notification);
-        body.put("data", data);
+            JSONObject data = new JSONObject();
+            data.put("latitudeDestination", latitudeDestination);
+            data.put("longitudeDestination", longitudeDestination);
+            data.put("idFacebook", idFacebook);
+            data.put("placeName", placeName);
+            data.put("durationSender", duration);
+            data.put("time", time);
+            data.put("friendsList", users);
 
-        HttpEntity<String> request = new HttpEntity<>(body.toString());
+            body.put("notification", notification);
+            body.put("data", data);
 
-        CompletableFuture<FirebaseResponse> pushNotification = androidPushNotificationsService.send(request);
-        CompletableFuture.allOf(pushNotification).join();
 
-        try {
-            FirebaseResponse firebaseResponse = pushNotification.get();
-            if (firebaseResponse.getSuccess() == 1) {
-                log.info("push notification sent ok!");
-            } else {
-                log.error("error sending push notifications: " + firebaseResponse.toString());
+            HttpEntity<String> request = new HttpEntity<>(body.toString());
+
+
+            CompletableFuture<FirebaseResponse> pushNotification = androidPushNotificationsService.send(request);
+            CompletableFuture.allOf(pushNotification).join();
+
+            try {
+                FirebaseResponse firebaseResponse = pushNotification.get();
+                if (firebaseResponse.getSuccess() == 1) {
+                    log.info("push notification sent ok!");
+                } else {
+                    log.error("error sending push notifications: " + firebaseResponse.toString());
+                }
+                return new ResponseEntity<>(firebaseResponse.toString(), HttpStatus.OK);
+
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
             }
-            return new ResponseEntity<>(firebaseResponse.toString(), HttpStatus.OK);
 
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
         }
-        return new ResponseEntity<>("the push notification cannot be send.", HttpStatus.BAD_REQUEST);
-    }
+            return new ResponseEntity<>("the push notification cannot be send.", HttpStatus.BAD_REQUEST);
+        }
 }

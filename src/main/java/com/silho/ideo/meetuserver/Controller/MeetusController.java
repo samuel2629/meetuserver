@@ -60,7 +60,7 @@ public class MeetusController {
                 String id = user.getToken();
                 registration_ids.put(id);
             }
-            body.put("to", registration_ids);
+            body.put("to", registration_ids.get(0));
             body.put("priority", "high");
 
             // body.put("dry_run", true);

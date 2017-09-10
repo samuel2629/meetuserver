@@ -53,31 +53,7 @@ public class MeetusController {
     public ResponseEntity<String> send(double latitudeDestination, double longitudeDestination, String placeName,
                                        String username, String duration, String idFacebook, long time, ArrayList<User> users) throws JSONException {
 
-            JSONObject body = new JSONObject();
-            // JsonArray registration_ids = new JsonArray();
-            // body.put("registration_ids", registration_ids);
-            body.put("to", "fcNA-4yS5FQ:APA91bHyr_QFhngGKoazd4ztyohaLbQQjgbMwt4TgNuYng7Wv2YD8gwkgdU8C96e_b8d37RFmaA-sto99auOSafHwliQ7bowYep83ndc_0NPQ7tM2jfOmbAvdTuGg4V3VtUlbdiZZYPn");
-            body.put("priority", "high");
-
-            // body.put("dry_run", true);
-
-            JSONObject notification = new JSONObject();
-            notification.put("body", "Meetus ?");
-            notification.put("title", username);
-            // notification.put("icon", "myicon");
-
-            JSONObject data = new JSONObject();
-            data.put("latitudeDestination", latitudeDestination);
-            data.put("longitudeDestination", longitudeDestination);
-            data.put("idFacebook", idFacebook);
-            data.put("placeName", placeName);
-            data.put("durationSender", duration);
-            data.put("time", time);
-            data.put("friendsList", users);
-
-            body.put("notification", notification);
-            body.put("data", data);
-
+        JSONObject body = getJsonObject(latitudeDestination, longitudeDestination, placeName, username, duration, idFacebook, time, users);
 
             HttpEntity<String> request = new HttpEntity<>(body.toString());
 
@@ -99,5 +75,35 @@ public class MeetusController {
             }
 
             return new ResponseEntity<>("the push notification cannot be send.", HttpStatus.BAD_REQUEST);
+    }
+
+    private JSONObject getJsonObject(double latitudeDestination, double longitudeDestination, String placeName, String username, String duration, String idFacebook, long time, ArrayList<User> users) throws JSONException {
+        JSONObject body = new JSONObject();
+        for (User user : users) {
+            // JsonArray registration_ids = new JsonArray();
+            // body.put("registration_ids", registration_ids);
+            body.put("to", user.getToken());
+            body.put("priority", "high");
+
+            // body.put("dry_run", true);
+
+            JSONObject notification = new JSONObject();
+            notification.put("body", "Meetus ?");
+            notification.put("title", username);
+            // notification.put("icon", "myicon");
+
+            JSONObject data = new JSONObject();
+            data.put("latitudeDestination", latitudeDestination);
+            data.put("longitudeDestination", longitudeDestination);
+            data.put("idFacebook", idFacebook);
+            data.put("placeName", placeName);
+            data.put("durationSender", duration);
+            data.put("time", time);
+            data.put("friendsList", users);
+
+            body.put("notification", notification);
+            body.put("data", data);
+        }
+        return body;
     }
 }

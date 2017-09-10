@@ -82,7 +82,7 @@ public class MeetusController {
         for (User user : users) {
             // JsonArray registration_ids = new JsonArray();
             // body.put("registration_ids", registration_ids);
-            body.put("to", user.getToken());
+            body.put("to", "cZ0-H85fWdE:APA91bE2CVA7y2ADdkAepOUGcLPzkxdxSxJrJu6I39duxX7tWYQ540QXfKlj7G7iU3LgNifxso0KkUmOz9JC2FAdYtqDK1M9Mfa-EF7VDxb2ER_F8xifkAl7TZPjT5tacQwHIXZ4mnHh");
             body.put("priority", "high");
 
             // body.put("dry_run", true);

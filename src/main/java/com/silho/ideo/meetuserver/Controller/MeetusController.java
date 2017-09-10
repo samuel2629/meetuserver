@@ -79,7 +79,6 @@ public class MeetusController {
 
     private JSONObject getJsonObject(double latitudeDestination, double longitudeDestination, String placeName, String username, String duration, String idFacebook, long time, ArrayList<User> users) throws JSONException {
         JSONObject body = new JSONObject();
-        for (User user : users) {
             // JsonArray registration_ids = new JsonArray();
             // body.put("registration_ids", registration_ids);
             body.put("to", "cZ0-H85fWdE:APA91bE2CVA7y2ADdkAepOUGcLPzkxdxSxJrJu6I39duxX7tWYQ540QXfKlj7G7iU3LgNifxso0KkUmOz9JC2FAdYtqDK1M9Mfa-EF7VDxb2ER_F8xifkAl7TZPjT5tacQwHIXZ4mnHh");
@@ -102,7 +101,6 @@ public class MeetusController {
 
             body.put("notification", notification);
             body.put("data", data);
-        }
         return body;
     }
 }

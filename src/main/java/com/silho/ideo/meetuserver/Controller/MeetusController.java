@@ -41,7 +41,7 @@ public class MeetusController {
                           @RequestParam("time") long time,
                           @RequestParam(value = "friendsList", required = false)ArrayList<User> users) throws JSONException {
         send(latitudeDestination, longitudeDestination, placeName, username, duration, idFacebook, time, users);
-        return "ok";
+        return "friends list : " + users + "ok";
     }
 
     private static final Logger log = LoggerFactory.getLogger(MeetusController.class);

@@ -2,7 +2,7 @@ package com.silho.ideo.meetuserver.controller;
 
 import com.silho.ideo.meetuserver.helpers.AndroidPushNotificationsService;
 import com.silho.ideo.meetuserver.helpers.FirebaseResponse;
-import com.silho.ideo.meetuserver.model.User;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -39,7 +38,7 @@ public class MeetusController {
                           @RequestParam("username") String username,
                           @RequestParam("placeName") String placeName,
                           @RequestParam("time") long time,
-                          @RequestParam(value = "friendsList", required = false)ArrayList<User> users) throws JSONException {
+                          @RequestParam(value = "friendsList", required = false)JSONArray users) throws JSONException {
         send(latitudeDestination, longitudeDestination, placeName, username, duration, idFacebook, time, users);
         return "friends list : " + users + "ok";
     }
@@ -51,7 +50,7 @@ public class MeetusController {
 
     @RequestMapping(value = "/send", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<String> send(double latitudeDestination, double longitudeDestination, String placeName,
-                                       String username, String duration, String idFacebook, long time, ArrayList<User> users) throws JSONException {
+                                       String username, String duration, String idFacebook, long time, JSONArray users) throws JSONException {
 
         JSONObject body = getJsonObject(latitudeDestination, longitudeDestination, placeName, username, duration, idFacebook, time, users);
 
@@ -77,7 +76,7 @@ public class MeetusController {
             return new ResponseEntity<>("the push notification cannot be send.", HttpStatus.BAD_REQUEST);
     }
 
-    private JSONObject getJsonObject(double latitudeDestination, double longitudeDestination, String placeName, String username, String duration, String idFacebook, long time, ArrayList<User> users) throws JSONException {
+    private JSONObject getJsonObject(double latitudeDestination, double longitudeDestination, String placeName, String username, String duration, String idFacebook, long time, JSONArray users) throws JSONException {
         JSONObject body = new JSONObject();
             // JsonArray registration_ids = new JsonArray();
             // body.put("registration_ids", registration_ids);

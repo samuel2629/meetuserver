@@ -3,7 +3,6 @@ package com.silho.ideo.meetuserver.controller;
 import com.silho.ideo.meetuserver.helpers.AndroidPushNotificationsService;
 import com.silho.ideo.meetuserver.helpers.FirebaseResponse;
 import com.silho.ideo.meetuserver.model.User;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -55,12 +54,9 @@ public class MeetusController {
                                        String username, String duration, String idFacebook, long time, ArrayList<User> users) throws JSONException {
 
             JSONObject body = new JSONObject();
-            JSONArray registration_ids = new JSONArray();
-            for(User user: users) {
-                String id = user.getToken();
-                registration_ids.put(id);
-            }
-            body.put("to", "cZ0-H85fWdE:APA91bE2CVA7y2ADdkAepOUGcLPzkxdxSxJrJu6I39duxX7tWYQ540QXfKlj7G7iU3LgNifxso0KkUmOz9JC2FAdYtqDK1M9Mfa-EF7VDxb2ER_F8xifkAl7TZPjT5tacQwHIXZ4mnHh");
+            // JsonArray registration_ids = new JsonArray();
+            // body.put("registration_ids", registration_ids);
+            body.put("to", "fcNA-4yS5FQ:APA91bHyr_QFhngGKoazd4ztyohaLbQQjgbMwt4TgNuYng7Wv2YD8gwkgdU8C96e_b8d37RFmaA-sto99auOSafHwliQ7bowYep83ndc_0NPQ7tM2jfOmbAvdTuGg4V3VtUlbdiZZYPn");
             body.put("priority", "high");
 
             // body.put("dry_run", true);

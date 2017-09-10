@@ -1,10 +1,12 @@
 package com.silho.ideo.meetuserver.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Samuel on 01/08/2017.
  */
 
-public class User {
+public class User implements Serializable {
 
     public String token, idFacebook, name, profilPic;
     public double latitude;

@@ -99,7 +99,6 @@ public class MeetusController {
             data.put("placeName", placeName);
             data.put("durationSender", duration);
             data.put("time", time);
-            data.put("friendsList", users);
 
             body.put("notification", notification);
             body.put("data", data);

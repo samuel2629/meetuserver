@@ -45,7 +45,7 @@ public class MeetusController {
             JSONObject jsonObject = users.getJSONObject(i);
             token = jsonObject.getString("token");
         }
-        return token;
+        return users.toString();
     }
 
     private static final Logger log = LoggerFactory.getLogger(MeetusController.class);

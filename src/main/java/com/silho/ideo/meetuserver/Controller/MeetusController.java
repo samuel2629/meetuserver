@@ -80,7 +80,7 @@ public class MeetusController {
         JSONObject body = new JSONObject();
             // JsonArray registration_ids = new JsonArray();
             // body.put("registration_ids", registration_ids);
-        for(int i =-1; i<users.length(); i++) {
+        for(int i =0; i<users.length(); i++) {
             body.put("to", users.getJSONObject(i).getString("token"));
             body.put("priority", "high");
 

@@ -41,11 +41,11 @@ public class MeetusController {
                           @RequestParam(value = "friendsList", required = false)JSONArray users) throws JSONException {
         send(latitudeDestination, longitudeDestination, placeName, username, duration, idFacebook, time, users);
         String token= "";
-        for(int i=0; i<users.length(); i++){
+        for(int i=0; i<=users.length(); i++){
             JSONObject jsonObject = users.getJSONObject(i);
             token = jsonObject.getString("token");
         }
-        return users.toString();
+        return token;
     }
 
     private static final Logger log = LoggerFactory.getLogger(MeetusController.class);

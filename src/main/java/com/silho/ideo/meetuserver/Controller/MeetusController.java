@@ -40,7 +40,8 @@ public class MeetusController {
                           @RequestParam("time") long time,
                           @RequestParam(value = "friendsList", required = false)JSONArray users) throws JSONException {
         send(latitudeDestination, longitudeDestination, placeName, username, duration, idFacebook, time, users);
-        return users.getJSONObject(0).getString("token") + users.getJSONObject(1).getString("token");
+        return users.getJSONObject(0).getString("token") + "//////" +users.getJSONObject(1).getString("token")
+                + "/////" + users.length();
     }
 
     private static final Logger log = LoggerFactory.getLogger(MeetusController.class);
@@ -80,7 +81,7 @@ public class MeetusController {
         JSONObject body = new JSONObject();
             // JsonArray registration_ids = new JsonArray();
             // body.put("registration_ids", registration_ids);
-        for(int i =0; i<users.length()-1; i++) {
+        for(int i= 0; i<users.length(); i++) {
             body.put("to", users.getJSONObject(i).getString("token"));
             body.put("priority", "high");
 

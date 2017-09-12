@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -52,11 +53,15 @@ public class MeetusController {
     public ResponseEntity<String> send(double latitudeDestination, double longitudeDestination, String placeName,
                                        String username, String duration, String idFacebook, long time, JSONArray users) throws JSONException {
 
-        //JSONObject body = getJsonObject(latitudeDestination, longitudeDestination, placeName, username, duration, idFacebook, time, users);
-
+        ArrayList<String> tokens = new ArrayList<>();
         for(int i= 0; i<users.length(); i++) {
+            String t = users.getJSONObject(i).getString("token");
+            tokens.add(t);
+        }
+            //JSONObject body = getJsonObject(latitudeDestination, longitudeDestination, placeName, username, duration, idFacebook, time, users);
+
             JSONObject body = new JSONObject();
-            body.put("to", users.getJSONObject(i).getString("token"));
+            body.put("to", tokens);
             body.put("priority", "high");
 
             // body.put("dry_run", true);
@@ -79,7 +84,6 @@ public class MeetusController {
 
             HttpEntity<String> request = new HttpEntity<>(body.toString());
 
-
             CompletableFuture<FirebaseResponse> pushNotification = androidPushNotificationsService.send(request);
             CompletableFuture.allOf(pushNotification).join();
 
@@ -95,9 +99,6 @@ public class MeetusController {
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
-            return new ResponseEntity<>("the push notification cannot be send.", HttpStatus.BAD_REQUEST);
-        }
-
             return new ResponseEntity<>("the push notification cannot be send.", HttpStatus.BAD_REQUEST);
     }
 

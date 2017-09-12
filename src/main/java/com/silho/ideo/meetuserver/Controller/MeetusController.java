@@ -59,7 +59,6 @@ public class MeetusController {
                 registration_ids.put(t);
             }
             body.put("registration_ids", registration_ids);
-            //body.put("to", "");
             body.put("priority", "high");
 
             // body.put("dry_run", true);
@@ -77,7 +76,7 @@ public class MeetusController {
             data.put("durationSender", duration);
             data.put("time", time);
 
-            body.put("notification", notification);
+            //body.put("notification", notification);
             body.put("data", data);
 
             HttpEntity<String> request = new HttpEntity<>(body.toString());

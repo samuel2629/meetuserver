@@ -63,10 +63,10 @@ public class MeetusController {
 
             // body.put("dry_run", true);
 
-            JSONObject notification = new JSONObject();
+            /*JSONObject notification = new JSONObject();
             notification.put("body", "Meetus ?");
             notification.put("title", username);
-            // notification.put("icon", "myicon");
+            // notification.put("icon", "myicon");*/
 
             JSONObject data = new JSONObject();
             data.put("latitudeDestination", latitudeDestination);

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -53,15 +52,14 @@ public class MeetusController {
     public ResponseEntity<String> send(double latitudeDestination, double longitudeDestination, String placeName,
                                        String username, String duration, String idFacebook, long time, JSONArray users) throws JSONException {
 
-        ArrayList<String> tokens = new ArrayList<>();
-        for(int i= 0; i<users.length(); i++) {
-            String t = users.getJSONObject(i).getString("token");
-            tokens.add(t);
-        }
-            //JSONObject body = getJsonObject(latitudeDestination, longitudeDestination, placeName, username, duration, idFacebook, time, users);
-
             JSONObject body = new JSONObject();
-            body.put("to", tokens);
+            JSONArray registration_ids = new JSONArray();
+            for(int i =0; i<users.length();i++){
+                String t = users.getJSONObject(i).getString("token");
+                registration_ids.put(t);
+            }
+            body.put("registration_ids", registration_ids);
+            //body.put("to", "");
             body.put("priority", "high");
 
             // body.put("dry_run", true);
@@ -102,32 +100,4 @@ public class MeetusController {
             return new ResponseEntity<>("the push notification cannot be send.", HttpStatus.BAD_REQUEST);
     }
 
-    private JSONObject getJsonObject(double latitudeDestination, double longitudeDestination, String placeName, String username, String duration, String idFacebook, long time, JSONArray users) throws JSONException {
-        JSONObject body = new JSONObject();
-            // JsonArray registration_ids = new JsonArray();
-            // body.put("registration_ids", registration_ids);
-        for(int i= 0; i<users.length(); i++) {
-            body.put("to", users.getJSONObject(i).getString("token"));
-            body.put("priority", "high");
-
-            // body.put("dry_run", true);
-
-            JSONObject notification = new JSONObject();
-            notification.put("body", "Meetus ?");
-            notification.put("title", username);
-            // notification.put("icon", "myicon");
-
-            JSONObject data = new JSONObject();
-            data.put("latitudeDestination", latitudeDestination);
-            data.put("longitudeDestination", longitudeDestination);
-            data.put("idFacebook", idFacebook);
-            data.put("placeName", placeName);
-            data.put("durationSender", duration);
-            data.put("time", time);
-
-            body.put("notification", notification);
-            body.put("data", data);
-        }
-        return body;
-    }
 }

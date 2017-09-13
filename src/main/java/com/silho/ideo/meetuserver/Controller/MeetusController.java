@@ -58,31 +58,27 @@ public class MeetusController {
                 String t = users.getJSONObject(i).getString("token");
                 registration_ids.put(t);
             }
-            body.put("registration_ids", registration_ids);
-            body.put("priority", "high");
+                body.put("registration_ids", registration_ids);
+                body.put("priority", "high");
 
-            // body.put("dry_run", true);
+                // body.put("dry_run", true);
 
-            /*JSONObject notification = new JSONObject();
-            notification.put("body", "Meetus ?");
-            notification.put("title", username);
-            // notification.put("icon", "myicon");*/
+                JSONObject data = new JSONObject();
+                data.put("latitudeDestination", latitudeDestination);
+                data.put("longitudeDestination", longitudeDestination);
+                data.put("idFacebook", idFacebook);
+                data.put("placeName", placeName);
+                data.put("durationSender", duration);
+                data.put("time", time);
+                data.put("username", username);
+                data.put("friendsList", users.toString());
 
-            JSONObject data = new JSONObject();
-            data.put("latitudeDestination", latitudeDestination);
-            data.put("longitudeDestination", longitudeDestination);
-            data.put("idFacebook", idFacebook);
-            data.put("placeName", placeName);
-            data.put("durationSender", duration);
-            data.put("time", time);
+                body.put("data", data);
 
-            //body.put("notification", notification);
-            body.put("data", data);
+                HttpEntity<String> request = new HttpEntity<>(body.toString());
 
-            HttpEntity<String> request = new HttpEntity<>(body.toString());
-
-            CompletableFuture<FirebaseResponse> pushNotification = androidPushNotificationsService.send(request);
-            CompletableFuture.allOf(pushNotification).join();
+                CompletableFuture<FirebaseResponse> pushNotification = androidPushNotificationsService.send(request);
+                CompletableFuture.allOf(pushNotification).join();
 
             try {
                 FirebaseResponse firebaseResponse = pushNotification.get();

@@ -31,15 +31,13 @@ public class MeetusController {
 
     @RequestMapping(value = "/request", method = RequestMethod.POST)
     @ResponseBody
-    public String request(@RequestParam(value = "duration", required = false) String duration,
-                          @RequestParam("latitudeDestination") double latitudeDestination,
+    public String request(@RequestParam("latitudeDestination") double latitudeDestination,
                           @RequestParam("longitudeDestination") double longitudeDestination,
-                          @RequestParam("idFacebook") String idFacebook,
                           @RequestParam("username") String username,
                           @RequestParam("placeName") String placeName,
                           @RequestParam("time") long time,
                           @RequestParam(value = "friendsList", required = false)JSONArray users) throws JSONException {
-        send(latitudeDestination, longitudeDestination, placeName, username, duration, idFacebook, time, users);
+        send(latitudeDestination, longitudeDestination, placeName, username, time, users);
         return "///" + users.length();
     }
 
@@ -50,7 +48,7 @@ public class MeetusController {
 
     @RequestMapping(value = "/send", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<String> send(double latitudeDestination, double longitudeDestination, String placeName,
-                                       String username, String duration, String idFacebook, long time, JSONArray users) throws JSONException {
+                                       String username, long time, JSONArray users) throws JSONException {
 
             JSONObject body = new JSONObject();
             JSONArray registration_ids = new JSONArray();
@@ -66,9 +64,7 @@ public class MeetusController {
                 JSONObject data = new JSONObject();
                 data.put("latitudeDestination", latitudeDestination);
                 data.put("longitudeDestination", longitudeDestination);
-                data.put("idFacebook", idFacebook);
                 data.put("placeName", placeName);
-                data.put("durationSender", duration);
                 data.put("time", time);
                 data.put("username", username);
                 data.put("friendsList", users.toString());

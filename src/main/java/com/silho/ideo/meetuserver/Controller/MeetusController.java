@@ -60,7 +60,7 @@ public class MeetusController {
                 body.put("registration_ids", registration_ids);
                 body.put("priority", "high");
 
-                // body.put("dry_run", true);
+                body.put("dry_run", true);
 
                 JSONObject data = new JSONObject();
                 data.put("latitudeDestination", latitudeDestination);

@@ -47,6 +47,43 @@ public class MeetusController {
     @Autowired
     AndroidPushNotificationsService androidPushNotificationsService;
 
+    @RequestMapping(value = "/decline", method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity<String> decline(long time, String idFacebook, JSONArray users) throws JSONException {
+
+        JSONObject body = new JSONObject();
+        JSONArray registration_ids = new JSONArray();
+        for(int i =0; i<users.length();i++){
+            String t = users.getJSONObject(i).getString("token");
+            registration_ids.put(t);
+        }
+        body.put("registration_ids", registration_ids);
+        body.put("priority", "high");
+
+        JSONObject data = new JSONObject();
+        data.put("idFacebook", idFacebook);
+        data.put("time", time);
+        body.put("data", data);
+
+        HttpEntity<String> request = new HttpEntity<>(body.toString());
+
+        CompletableFuture<FirebaseResponse> pushNotification = androidPushNotificationsService.send(request);
+        CompletableFuture.allOf(pushNotification).join();
+
+        try {
+            FirebaseResponse firebaseResponse = pushNotification.get();
+            if (firebaseResponse.getSuccess() == 1) {
+                log.info("push notification sent ok!");
+            } else {
+                log.error("error sending push notifications: " + firebaseResponse.toString());
+            }
+            return new ResponseEntity<>(firebaseResponse.toString(), HttpStatus.OK);
+
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>("the push notification cannot be send.", HttpStatus.BAD_REQUEST);
+    }
+
     @RequestMapping(value = "/send", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<String> send(double latitudeDestination, double longitudeDestination, String placeName,
                                        String username, String idFacebook, long time, JSONArray users) throws JSONException {

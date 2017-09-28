@@ -42,13 +42,22 @@ public class MeetusController {
         return "///" + users.length();
     }
 
+    @RequestMapping(value = "/decline", method = RequestMethod.POST)
+    @ResponseBody
+    public String decline(@RequestParam("time") long time,
+                          @RequestParam("idFacebook") String idFacebook,
+                          @RequestParam("friendList") JSONArray users) throws JSONException{
+        sendDecline(time, idFacebook, users);
+        return "Working";
+    }
+
     private static final Logger log = LoggerFactory.getLogger(MeetusController.class);
 
     @Autowired
     AndroidPushNotificationsService androidPushNotificationsService;
 
-    @RequestMapping(value = "/decline", method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<String> decline(long time, String idFacebook, JSONArray users) throws JSONException {
+    @RequestMapping(value = "/sendDecline", method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity<String> sendDecline(long time, String idFacebook, JSONArray users) throws JSONException {
 
         JSONObject body = new JSONObject();
         JSONArray registration_ids = new JSONArray();

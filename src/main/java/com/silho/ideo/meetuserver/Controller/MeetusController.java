@@ -42,6 +42,13 @@ public class MeetusController {
         return "///" + users.length();
     }
 
+    @RequestMapping(value = "/reminder", method = RequestMethod.POST)
+    @ResponseBody
+    public String reminder(@RequestParam("token") String token) throws JSONException {
+        sendReminder(token);
+        return "ok";
+    }
+
     @RequestMapping(value = "/decline", method = RequestMethod.POST)
     @ResponseBody
     public String decline(@RequestParam("time") long time,
@@ -49,13 +56,6 @@ public class MeetusController {
                           @RequestParam("friendList") JSONArray users) throws JSONException{
         sendDecline(time, idFacebook, users);
         return "Working";
-    }
-
-    @RequestMapping(value = "/reminder", method = RequestMethod.POST)
-    @ResponseBody
-    public String reminder(@RequestParam("token") String token) throws JSONException {
-        sendReminder(token);
-        return "ok";
     }
 
     private static final Logger log = LoggerFactory.getLogger(MeetusController.class);
@@ -100,11 +100,11 @@ public class MeetusController {
         return new ResponseEntity<>("the push notification cannot be send.", HttpStatus.BAD_REQUEST);
     }
 
-    @RequestMapping(value = "/reminder", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/sendReminder", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<String> sendReminder(String token) throws JSONException {
 
         JSONObject body = new JSONObject();
-        body.put("registration_ids", token);
+        body.put("to", token);
         body.put("priority", "high");
 
         JSONObject data = new JSONObject();

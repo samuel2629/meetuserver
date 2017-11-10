@@ -51,6 +51,13 @@ public class MeetusController {
         return "Working";
     }
 
+    @RequestMapping(value = "/reminder", method = RequestMethod.POST)
+    @ResponseBody
+    public String reminder(@RequestParam("token") String token) throws JSONException {
+        sendReminder(token);
+        return "ok";
+    }
+
     private static final Logger log = LoggerFactory.getLogger(MeetusController.class);
 
     @Autowired
@@ -71,6 +78,38 @@ public class MeetusController {
         JSONObject data = new JSONObject();
         data.put("idFacebook", idFacebook);
         data.put("time", time);
+        body.put("data", data);
+
+        HttpEntity<String> request = new HttpEntity<>(body.toString());
+
+        CompletableFuture<FirebaseResponse> pushNotification = androidPushNotificationsService.send(request);
+        CompletableFuture.allOf(pushNotification).join();
+
+        try {
+            FirebaseResponse firebaseResponse = pushNotification.get();
+            if (firebaseResponse.getSuccess() == 1) {
+                log.info("push notification sent ok!");
+            } else {
+                log.error("error sending push notifications: " + firebaseResponse.toString());
+            }
+            return new ResponseEntity<>(firebaseResponse.toString(), HttpStatus.OK);
+
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>("the push notification cannot be send.", HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "/sendReminder", method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity<String> sendReminder(String token) throws JSONException {
+
+        JSONObject body = new JSONObject();
+        body.put("registration_ids", token);
+        body.put("priority", "high");
+
+        JSONObject data = new JSONObject();
+        data.put("name", "samuel");
+
         body.put("data", data);
 
         HttpEntity<String> request = new HttpEntity<>(body.toString());

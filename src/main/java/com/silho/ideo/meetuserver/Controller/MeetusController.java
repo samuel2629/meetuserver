@@ -100,7 +100,7 @@ public class MeetusController {
         return new ResponseEntity<>("the push notification cannot be send.", HttpStatus.BAD_REQUEST);
     }
 
-    @RequestMapping(value = "/sendReminder", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/reminder", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<String> sendReminder(String token) throws JSONException {
 
         JSONObject body = new JSONObject();

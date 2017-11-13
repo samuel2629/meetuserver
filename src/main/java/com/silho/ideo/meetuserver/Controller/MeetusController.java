@@ -49,12 +49,13 @@ public class MeetusController {
         return "ok";
     }
 
-    @RequestMapping(value = "/decline", method = RequestMethod.POST)
+    @RequestMapping(value = "/acceptedOrDeclined", method = RequestMethod.POST)
     @ResponseBody
     public String decline(@RequestParam("time") long time,
                           @RequestParam("idFacebook") String idFacebook,
-                          @RequestParam("friendList") JSONArray users) throws JSONException{
-        sendDecline(time, idFacebook, users);
+                          @RequestParam("friendList") JSONArray users,
+                          @RequestParam("acceptedOrDeclined") int acceptedOrDeclined) throws JSONException{
+        sendDecline(time, idFacebook, users, acceptedOrDeclined);
         return "Working";
     }
 
@@ -64,7 +65,7 @@ public class MeetusController {
     AndroidPushNotificationsService androidPushNotificationsService;
 
     @RequestMapping(value = "/sendDecline", method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<String> sendDecline(long time, String idFacebook, JSONArray users) throws JSONException {
+    public ResponseEntity<String> sendDecline(long time, String idFacebook, JSONArray users, int acceptedOrDeclined) throws JSONException {
 
         JSONObject body = new JSONObject();
         JSONArray registration_ids = new JSONArray();
@@ -78,6 +79,8 @@ public class MeetusController {
         JSONObject data = new JSONObject();
         data.put("idFacebook", idFacebook);
         data.put("time", time);
+        data.put("friendsList", users.toString());
+        data.put("acceptedOrDeclined", acceptedOrDeclined);
         body.put("data", data);
 
         HttpEntity<String> request = new HttpEntity<>(body.toString());

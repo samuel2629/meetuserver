@@ -51,9 +51,9 @@ public class MeetusController {
 
     @RequestMapping(value = "/acceptedOrDeclined", method = RequestMethod.POST)
     @ResponseBody
-    public String decline(@RequestParam("time") long time,
+    public String acceptOrDecline(@RequestParam("time") long time,
                           @RequestParam("idFacebook") String idFacebook,
-                          @RequestParam("friendList") JSONArray users,
+                          @RequestParam("friendsList") JSONArray users,
                           @RequestParam("acceptedOrDeclined") int acceptedOrDeclined) throws JSONException{
         sendDecline(time, idFacebook, users, acceptedOrDeclined);
         return "Working";

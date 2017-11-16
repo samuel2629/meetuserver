@@ -23,7 +23,6 @@ import java.util.concurrent.ExecutionException;
 @Controller
 public class MeetusController {
 
-
     @RequestMapping("/")
     public String home(){
         return "home";
@@ -56,7 +55,8 @@ public class MeetusController {
                           @RequestParam("friendsList") JSONArray users,
                           @RequestParam("acceptedOrDeclined") int acceptedOrDeclined) throws JSONException{
         sendDecline(time, idFacebook, users, acceptedOrDeclined);
-        return "Working";
+        return System.getenv("API_KEY");
+
     }
 
     private static final Logger log = LoggerFactory.getLogger(MeetusController.class);

@@ -55,7 +55,7 @@ public class MeetusController {
                           @RequestParam("friendsList") JSONArray users,
                           @RequestParam("acceptedOrDeclined") int acceptedOrDeclined) throws JSONException{
         sendDecline(time, idFacebook, users, acceptedOrDeclined);
-        return System.getenv("API_KEY");
+        return "";
 
     }
 
